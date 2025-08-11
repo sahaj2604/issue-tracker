@@ -1,5 +1,5 @@
 "use client";
-import { Button, Callout, Text, TextField } from "@radix-ui/themes";
+import { Button, Callout, Spinner, Text, TextField } from "@radix-ui/themes";
 import React, { useState } from "react";
 import SimpleMDE from "react-simplemde-editor";
 import "easymde/dist/easymde.min.css";
@@ -23,6 +23,7 @@ const NewIssuePage = () => {
   });
   const router = useRouter();
   const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false)
   return (
     <div className="max-w-xl">
       {error && (
@@ -33,10 +34,13 @@ const NewIssuePage = () => {
       <form
         onSubmit={handleSubmit(async (data) => {
           try {
+            setIsSubmitting(true)
             await axios.post("/api/issues", data);
             router.push("/issues");
           } catch (error) {
             setError("Error Occured");
+          }finally{
+            setIsSubmitting(false)
           }
         })}
         className="space-y-3"
@@ -54,7 +58,7 @@ const NewIssuePage = () => {
           )}
         />
 
-        <Button>Submit New Issue</Button>
+        <Button disabled={isSubmitting}>Submit New Issue {isSubmitting && <Spinner/>}</Button>
       </form>
     </div>
   );
