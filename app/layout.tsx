@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Inter } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Navbar from "./Navbar";
 import "@radix-ui/themes/styles.css";
-import { Theme, ThemePanel } from "@radix-ui/themes";
+import { Theme } from "@radix-ui/themes";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -33,7 +33,6 @@ export default function RootLayout({
         <Theme accentColor="violet">
           <Navbar />
           <main className="p-5">{children}</main>
-          <ThemePanel/>
         </Theme>
       </body>
     </html>
