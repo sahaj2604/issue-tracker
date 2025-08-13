@@ -1,29 +1,31 @@
 import { prisma } from "@/prisma/client";
-import {  Table } from "@radix-ui/themes";
+import { Table } from "@radix-ui/themes";
 import React from "react";
-import {IssueStatusBadge,Link} from '../components'
+import { IssueStatusBadge, Link } from "../components";
 import IssuesAction from "./IssuesAction";
 
 const IssuesPage = async () => {
   const issues = await prisma.issue.findMany();
   return (
     <div>
-      <IssuesAction/>
+      <IssuesAction />
       <Table.Root variant="surface">
         <Table.Header>
-          <Table.ColumnHeaderCell>Issues</Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className="hidden md:table-cell">
-            Status
-          </Table.ColumnHeaderCell>
-          <Table.ColumnHeaderCell className="hidden md:table-cell">
-            Created
-          </Table.ColumnHeaderCell>
+          <Table.Row>
+            <Table.ColumnHeaderCell>Issues</Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className="hidden md:table-cell">
+              Status
+            </Table.ColumnHeaderCell>
+            <Table.ColumnHeaderCell className="hidden md:table-cell">
+              Created
+            </Table.ColumnHeaderCell>
+          </Table.Row>
         </Table.Header>
         <Table.Body>
           {issues.map((issue) => (
             <Table.Row key={issue.id}>
               <Table.Cell>
-               <Link href={`/issues/${issue.id}`}>{issue.title}</Link> 
+                <Link href={`/issues/${issue.id}`}>{issue.title}</Link>
 
                 <div className="md:hidden block">
                   <IssueStatusBadge status={issue.status} />
@@ -43,6 +45,6 @@ const IssuesPage = async () => {
   );
 };
 
-export const dynamic='force-dynamic'
+export const dynamic = "force-dynamic";
 
 export default IssuesPage;
